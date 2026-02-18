@@ -1,0 +1,329 @@
+/* ============================================
+   SCIENTIFIC CALCULATOR - CSS3 STYLES
+   Design: Modern Minimalist with Vibrant Accents
+   Themes: Light and Dark modes
+   ============================================ */
+
+/* CSS Variables for theming */
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #eeeeee;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --accent-color: #10b981;
+  --accent-hover: #059669;
+  --operator-bg: #3b82f6;
+  --operator-hover: #2563eb;
+  --number-bg: #f0f0f0;
+  --number-hover: #e0e0e0;
+  --function-bg: #e5e5e5;
+  --function-hover: #d5d5d5;
+  --clear-bg: #ef4444;
+  --clear-hover: #dc2626;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark Theme */
+body.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #b0b0b0;
+  --accent-color: #34d399;
+  --accent-hover: #10b981;
+  --operator-bg: #1e40af;
+  --operator-hover: #1e3a8a;
+  --number-bg: #404040;
+  --number-hover: #505050;
+  --function-bg: #4a4a4a;
+  --function-hover: #5a5a5a;
+  --clear-bg: #dc2626;
+  --clear-hover: #b91c1c;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Calculator Container */
+.calculator-container {
+  width: 100%;
+  max-width: 420px;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.calculator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.calculator-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.75rem;
+  background-color: var(--bg-secondary);
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.theme-toggle:hover {
+  background-color: var(--function-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Main Calculator */
+.calculator {
+  background-color: var(--bg-primary);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+/* Display Section */
+.display-section {
+  grid-column: 1 / -1;
+  background-color: var(--bg-secondary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+.display-history {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  height: 1.5rem;
+  margin-bottom: 0.5rem;
+  min-height: 1.5rem;
+}
+
+.display-main {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: 1.2;
+}
+
+/* Button Groups */
+.button-group {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.memory-buttons {
+  margin-bottom: 0.25rem;
+}
+
+.scientific-row-1,
+.scientific-row-2,
+.scientific-row-3 {
+  margin-bottom: 0.25rem;
+}
+
+.constants-row {
+  margin-bottom: 0.25rem;
+}
+
+.main-grid {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+}
+
+/* Button Styles */
+.btn {
+  padding: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Number Buttons */
+.btn-number {
+  background-color: var(--number-bg);
+  color: var(--text-primary);
+}
+
+.btn-number:hover {
+  background-color: var(--number-hover);
+}
+
+/* Operator Buttons */
+.btn-operator {
+  background-color: var(--operator-bg);
+  color: white;
+  font-weight: 700;
+}
+
+.btn-operator:hover {
+  background-color: var(--operator-hover);
+}
+
+/* Function Buttons */
+.btn-function {
+  background-color: var(--function-bg);
+  color: var(--text-primary);
+}
+
+.btn-function:hover {
+  background-color: var(--function-hover);
+}
+
+/* Memory Buttons */
+.btn-memory {
+  background-color: var(--function-bg);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.btn-memory:hover {
+  background-color: var(--function-hover);
+}
+
+/* Clear Button */
+.btn-clear {
+  background-color: var(--clear-bg);
+  color: white;
+  font-weight: 700;
+}
+
+.btn-clear:hover {
+  background-color: var(--clear-hover);
+}
+
+/* Equals Button */
+.btn-equals {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 700;
+}
+
+.btn-equals:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Footer */
+.calculator-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .calculator-container {
+    max-width: 100%;
+  }
+
+  .calculator {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    padding: 0.875rem;
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  .display-main {
+    font-size: 2.5rem;
+  }
+
+  .calculator-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Accessibility */
+.btn:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
