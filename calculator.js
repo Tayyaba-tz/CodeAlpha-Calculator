@@ -1,242 +1,208 @@
-/**
- * Scientific Calculator - Vanilla JavaScript ES6
- * Features: Arithmetic, Scientific Operations, Keyboard Support, Theme Switching
- */
+// ============================================
+// SCIENTIFIC CALCULATOR - JAVASCRIPT ES6
+// Features: Standard/Scientific modes, Color themes
+// ============================================
 
-class ScientificCalculator {
+class Calculator {
   constructor() {
-    // DOM Elements
     this.displayMain = document.getElementById('displayMain');
     this.displayHistory = document.getElementById('displayHistory');
-    this.themeToggle = document.getElementById('themeToggle');
-
-    // Calculator State
-    this.display = '0';
-    this.previousValue = null;
+    this.currentValue = '0';
+    this.previousValue = '';
     this.operation = null;
-    this.waitingForNewValue = false;
     this.memory = 0;
-
-    // Initialize
+    this.currentMode = 'standard';
+    this.currentTheme = localStorage.getItem('calculatorTheme') || 'white';
+    
     this.init();
   }
 
   init() {
-    // Attach event listeners to all buttons
-    this.attachButtonListeners();
-
-    // Theme toggle
-    this.themeToggle.addEventListener('click', () => this.toggleTheme());
-
-    // Keyboard support
-    document.addEventListener('keydown', (e) => this.handleKeyPress(e));
-
-    // Load saved theme
-    this.loadTheme();
-
-    // Update display
+    this.setupEventListeners();
+    this.applyTheme(this.currentTheme);
     this.updateDisplay();
   }
 
-  attachButtonListeners() {
+  setupEventListeners() {
     // Number buttons
-    document.querySelectorAll('[data-number]').forEach((btn) => {
-      btn.addEventListener('click', () => this.handleNumber(btn.dataset.number));
+    document.querySelectorAll('[data-number]').forEach(btn => {
+      btn.addEventListener('click', (e) => this.handleNumber(e.target.dataset.number));
     });
 
     // Operator buttons
-    document.querySelectorAll('[data-operator]').forEach((btn) => {
-      btn.addEventListener('click', () => this.handleOperator(btn.dataset.operator));
+    document.querySelectorAll('[data-operator]').forEach(btn => {
+      btn.addEventListener('click', (e) => this.handleOperator(e.target.dataset.operator));
     });
 
     // Action buttons
-    document.querySelectorAll('[data-action]').forEach((btn) => {
-      btn.addEventListener('click', () => this.handleAction(btn.dataset.action));
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', (e) => this.handleAction(e.target.dataset.action));
     });
+
+    // Mode toggle
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => this.switchMode(e.target.dataset.mode));
+    });
+
+    // Theme selector
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => this.applyTheme(e.target.dataset.theme));
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => this.handleKeyboard(e));
   }
 
   handleNumber(num) {
-    if (this.waitingForNewValue) {
-      this.display = num;
-      this.waitingForNewValue = false;
+    if (num === '.' && this.currentValue.includes('.')) return;
+    
+    if (this.currentValue === '0' && num !== '.') {
+      this.currentValue = num;
+    } else if (this.currentValue === '0' && num === '.') {
+      this.currentValue = '0.';
     } else {
-      this.display = this.display === '0' ? num : this.display + num;
+      this.currentValue += num;
     }
+    
     this.updateDisplay();
   }
 
   handleOperator(op) {
-    const currentValue = parseFloat(this.display);
-
-    if (this.previousValue === null) {
-      this.previousValue = currentValue;
-    } else if (this.operation) {
-      const result = this.calculate(this.previousValue, currentValue, this.operation);
-      this.display = String(result);
-      this.previousValue = result;
+    if (this.operation !== null) {
+      this.calculate();
     }
-
+    
+    this.previousValue = this.currentValue;
     this.operation = op;
-    this.waitingForNewValue = true;
+    this.currentValue = '0';
     this.updateDisplay();
   }
 
   handleAction(action) {
     switch (action) {
-      case 'equals':
-        this.handleEquals();
-        break;
       case 'clear':
-        this.handleClear();
+        this.clear();
         break;
       case 'backspace':
-        this.handleBackspace();
+        this.backspace();
+        break;
+      case 'equals':
+        this.calculate();
         break;
       case 'sqrt':
-        this.handleScientific('sqrt');
+        this.currentValue = Math.sqrt(parseFloat(this.currentValue)).toString();
         break;
       case 'square':
-        this.handleScientific('square');
+        this.currentValue = (parseFloat(this.currentValue) ** 2).toString();
         break;
       case 'cube':
-        this.handleScientific('cube');
+        this.currentValue = (parseFloat(this.currentValue) ** 3).toString();
         break;
       case 'power':
-        this.handleOperator('^');
-        break;
-      case 'sin':
-        this.handleScientific('sin');
-        break;
-      case 'cos':
-        this.handleScientific('cos');
-        break;
-      case 'tan':
-        this.handleScientific('tan');
+        this.operation = '^';
+        this.previousValue = this.currentValue;
+        this.currentValue = '0';
         break;
       case 'reciprocal':
-        this.handleScientific('reciprocal');
+        this.currentValue = (1 / parseFloat(this.currentValue)).toString();
+        break;
+      case 'sin':
+        this.currentValue = Math.sin(parseFloat(this.currentValue) * Math.PI / 180).toString();
+        break;
+      case 'cos':
+        this.currentValue = Math.cos(parseFloat(this.currentValue) * Math.PI / 180).toString();
+        break;
+      case 'tan':
+        this.currentValue = Math.tan(parseFloat(this.currentValue) * Math.PI / 180).toString();
         break;
       case 'log':
-        this.handleScientific('log');
+        this.currentValue = Math.log10(parseFloat(this.currentValue)).toString();
         break;
       case 'ln':
-        this.handleScientific('ln');
+        this.currentValue = Math.log(parseFloat(this.currentValue)).toString();
         break;
       case 'factorial':
-        this.handleScientific('factorial');
+        this.currentValue = this.factorial(parseInt(this.currentValue)).toString();
         break;
       case 'negate':
-        this.handleScientific('negate');
+        this.currentValue = (parseFloat(this.currentValue) * -1).toString();
         break;
       case 'pi':
-        this.handleScientific('pi');
-        break;
-      case 'e':
-        this.handleScientific('e');
+        this.currentValue = Math.PI.toString();
         break;
       case 'modulo':
-        this.handleOperator('%');
+        this.operation = '%';
+        this.previousValue = this.currentValue;
+        this.currentValue = '0';
         break;
       case 'mc':
         this.memory = 0;
         break;
       case 'mr':
-        this.display = String(this.memory);
-        this.waitingForNewValue = true;
+        this.currentValue = this.memory.toString();
         break;
       case 'm+':
-        this.memory += parseFloat(this.display);
-        this.waitingForNewValue = true;
+        this.memory += parseFloat(this.currentValue);
+        this.currentValue = '0';
         break;
       case 'm-':
-        this.memory -= parseFloat(this.display);
-        this.waitingForNewValue = true;
+        this.memory -= parseFloat(this.currentValue);
+        this.currentValue = '0';
         break;
     }
+    
     this.updateDisplay();
   }
 
-  handleEquals() {
-    if (this.operation && this.previousValue !== null) {
-      const currentValue = parseFloat(this.display);
-      const result = this.calculate(this.previousValue, currentValue, this.operation);
-      this.display = String(result);
-      this.previousValue = null;
-      this.operation = null;
-      this.waitingForNewValue = true;
-    }
-    this.updateDisplay();
-  }
+  calculate() {
+    if (this.operation === null || this.previousValue === '') return;
 
-  calculate(prev, current, op) {
-    switch (op) {
+    const prev = parseFloat(this.previousValue);
+    const current = parseFloat(this.currentValue);
+    let result;
+
+    switch (this.operation) {
       case '+':
-        return prev + current;
+        result = prev + current;
+        break;
       case '-':
-        return prev - current;
+        result = prev - current;
+        break;
       case '*':
-        return prev * current;
+        result = prev * current;
+        break;
       case '/':
-        return current !== 0 ? prev / current : 0;
+        result = current !== 0 ? prev / current : 0;
+        break;
       case '%':
-        return prev % current;
+        result = prev % current;
+        break;
       case '^':
-        return Math.pow(prev, current);
+        result = prev ** current;
+        break;
       default:
-        return current;
+        return;
     }
+
+    this.currentValue = result.toString();
+    this.operation = null;
+    this.previousValue = '';
+    this.updateDisplay();
   }
 
-  handleScientific(func) {
-    const currentValue = parseFloat(this.display);
-    let result = 0;
+  clear() {
+    this.currentValue = '0';
+    this.previousValue = '';
+    this.operation = null;
+    this.updateDisplay();
+  }
 
-    switch (func) {
-      case 'sqrt':
-        result = Math.sqrt(currentValue);
-        break;
-      case 'square':
-        result = currentValue * currentValue;
-        break;
-      case 'cube':
-        result = currentValue * currentValue * currentValue;
-        break;
-      case 'sin':
-        result = Math.sin((currentValue * Math.PI) / 180);
-        break;
-      case 'cos':
-        result = Math.cos((currentValue * Math.PI) / 180);
-        break;
-      case 'tan':
-        result = Math.tan((currentValue * Math.PI) / 180);
-        break;
-      case 'log':
-        result = Math.log10(currentValue);
-        break;
-      case 'ln':
-        result = Math.log(currentValue);
-        break;
-      case 'factorial':
-        result = this.factorial(Math.floor(currentValue));
-        break;
-      case 'reciprocal':
-        result = 1 / currentValue;
-        break;
-      case 'pi':
-        result = Math.PI;
-        break;
-      case 'e':
-        result = Math.E;
-        break;
-      case 'negate':
-        result = -currentValue;
-        break;
-      default:
-        result = currentValue;
+  backspace() {
+    if (this.currentValue.length > 1) {
+      this.currentValue = this.currentValue.slice(0, -1);
+    } else {
+      this.currentValue = '0';
     }
-
-    this.display = String(result);
-    this.waitingForNewValue = true;
     this.updateDisplay();
   }
 
@@ -250,78 +216,76 @@ class ScientificCalculator {
     return result;
   }
 
-  handleClear() {
-    this.display = '0';
-    this.previousValue = null;
-    this.operation = null;
-    this.waitingForNewValue = false;
-    this.updateDisplay();
-  }
-
-  handleBackspace() {
-    if (this.display.length > 1) {
-      this.display = this.display.slice(0, -1);
-    } else {
-      this.display = '0';
-    }
-    this.updateDisplay();
-  }
-
-  handleKeyPress(e) {
-    if (e.key >= '0' && e.key <= '9') {
-      this.handleNumber(e.key);
-    } else if (e.key === '.') {
-      if (!this.display.includes('.')) {
-        this.handleNumber('.');
-      }
-    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
-      e.preventDefault();
-      this.handleOperator(e.key);
-    } else if (e.key === 'Enter' || e.key === '=') {
-      e.preventDefault();
-      this.handleEquals();
-    } else if (e.key === 'Backspace') {
-      e.preventDefault();
-      this.handleBackspace();
-    } else if (e.key === 'Escape') {
-      this.handleClear();
-    }
-  }
-
   updateDisplay() {
-    this.displayMain.textContent = this.display;
-
-    // Update history display
-    if (this.operation && this.previousValue !== null) {
+    this.displayMain.textContent = this.currentValue;
+    
+    if (this.operation) {
       this.displayHistory.textContent = `${this.previousValue} ${this.operation}`;
-    } else if (this.memory !== 0) {
-      this.displayHistory.textContent = `M: ${this.memory}`;
     } else {
       this.displayHistory.textContent = '';
     }
   }
 
-  toggleTheme() {
-    const isDarkTheme = document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
-    this.updateThemeIcon();
+  switchMode(mode) {
+    this.currentMode = mode;
+    
+    // Update button states
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.mode === mode) {
+        btn.classList.add('active');
+      }
+    });
+
+    // Show/hide button sections
+    document.getElementById('standardMode').classList.toggle('hidden', mode !== 'standard');
+    document.getElementById('scientificMode').classList.toggle('hidden', mode !== 'scientific');
+
+    this.clear();
   }
 
-  loadTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-theme');
+  applyTheme(theme) {
+    this.currentTheme = theme;
+    localStorage.setItem('calculatorTheme', theme);
+    
+    // Remove all theme classes
+    document.body.classList.remove('theme-white', 'theme-pink', 'theme-green', 'theme-orange', 'theme-black');
+    
+    // Add selected theme class
+    document.body.classList.add(`theme-${theme}`);
+
+    // Update active theme button
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.style.boxShadow = btn.dataset.theme === theme ? '0 0 0 3px rgba(0,0,0,0.3)' : 'none';
+    });
+  }
+
+  handleKeyboard(e) {
+    if (e.key >= '0' && e.key <= '9') {
+      this.handleNumber(e.key);
+    } else if (e.key === '.') {
+      this.handleNumber('.');
+    } else if (e.key === '+' || e.key === '-') {
+      this.handleOperator(e.key);
+    } else if (e.key === '*') {
+      e.preventDefault();
+      this.handleOperator('*');
+    } else if (e.key === '/') {
+      e.preventDefault();
+      this.handleOperator('/');
+    } else if (e.key === 'Enter' || e.key === '=') {
+      e.preventDefault();
+      this.handleAction('equals');
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
+      this.backspace();
+    } else if (e.key === 'Escape') {
+      this.clear();
     }
-    this.updateThemeIcon();
-  }
-
-  updateThemeIcon() {
-    const isDarkTheme = document.body.classList.contains('dark-theme');
-    this.themeToggle.querySelector('.theme-icon').textContent = isDarkTheme ? '☀️' : '🌙';
   }
 }
 
 // Initialize calculator when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  new ScientificCalculator();
+  new Calculator();
 });

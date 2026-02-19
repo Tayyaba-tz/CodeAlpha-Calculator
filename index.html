@@ -7,102 +7,158 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-wrapper">
-        <!-- Header with theme toggle -->
+    <div class="calculator-container">
+        <!-- Header with toggle and theme selector -->
         <div class="calculator-header">
-            <h1>Scientific Calculator</h1>
-            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
-            </button>
-        </div>
-
-        <!-- Main calculator container -->
-        <div class="calculator-wrapper">
-            <!-- Display section (left side on desktop) -->
-            <div class="display-container">
-                <div class="display-section">
-                    <div class="display-history" id="displayHistory"></div>
-                    <div class="display-main" id="displayMain">0</div>
+            <div class="header-left">
+                <h1>Calculator</h1>
+            </div>
+            <div class="header-right">
+                <!-- Mode Toggle -->
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="standard">Standard</button>
+                    <button class="mode-btn" data-mode="scientific">Scientific</button>
+                </div>
+                
+                <!-- Theme Selector -->
+                <div class="theme-selector">
+                    <button class="theme-btn" data-theme="white" title="White" style="background-color: #ffffff; border: 2px solid #000;"></button>
+                    <button class="theme-btn" data-theme="pink" title="Pink" style="background-color: #ff69b4;"></button>
+                    <button class="theme-btn" data-theme="green" title="Green" style="background-color: #90ee90;"></button>
+                    <button class="theme-btn" data-theme="orange" title="Orange" style="background-color: #ffa500;"></button>
+                    <button class="theme-btn" data-theme="black" title="Black" style="background-color: #1a1a1a; border: 2px solid #666;"></button>
                 </div>
             </div>
+        </div>
 
-            <!-- Buttons section (right side on desktop) -->
-            <div class="buttons-container">
-                <!-- Memory buttons -->
-                <div class="button-group memory-buttons">
-                    <button class="btn btn-memory" data-action="mc">MC</button>
-                    <button class="btn btn-memory" data-action="mr">MR</button>
-                    <button class="btn btn-memory" data-action="m-">M−</button>
-                    <button class="btn btn-memory" data-action="m+">M+</button>
-                </div>
+        <!-- Main Calculator -->
+        <div class="calculator-main">
+            <!-- Display -->
+            <div class="display-section">
+                <div class="display-history" id="displayHistory"></div>
+                <div class="display-main" id="displayMain">0</div>
+            </div>
 
-                <!-- Scientific functions row 1 -->
-                <div class="button-group scientific-row-1">
-                    <button class="btn btn-function" data-action="sqrt">√</button>
-                    <button class="btn btn-function" data-action="square">x²</button>
-                    <button class="btn btn-function" data-action="cube">x³</button>
-                    <button class="btn btn-function" data-action="power">xʸ</button>
-                </div>
-
-                <!-- Scientific functions row 2 -->
-                <div class="button-group scientific-row-2">
-                    <button class="btn btn-function" data-action="sin">sin</button>
-                    <button class="btn btn-function" data-action="cos">cos</button>
-                    <button class="btn btn-function" data-action="tan">tan</button>
-                    <button class="btn btn-function" data-action="reciprocal">1/x</button>
-                </div>
-
-                <!-- Scientific functions row 3 -->
-                <div class="button-group scientific-row-3">
-                    <button class="btn btn-function" data-action="log">log</button>
-                    <button class="btn btn-function" data-action="ln">ln</button>
-                    <button class="btn btn-function" data-action="factorial">n!</button>
-                    <button class="btn btn-function" data-action="negate">±</button>
-                </div>
-
-                <!-- Constants and clear -->
-                <div class="button-group constants-row">
-                    <button class="btn btn-function" data-action="pi">π</button>
-                    <button class="btn btn-function" data-action="e">e</button>
-                    <button class="btn btn-clear" data-action="clear" style="grid-column: span 2;">Clear</button>
-                </div>
-
-                <!-- Main calculator grid -->
-                <div class="button-group main-grid">
-                    <!-- Row 1 -->
+            <!-- Standard Calculator Buttons -->
+            <div class="buttons-section standard-mode" id="standardMode">
+                <!-- Row 1 -->
+                <div class="button-row">
+                    <button class="btn btn-function" data-action="clear">C</button>
                     <button class="btn btn-function" data-action="backspace">←</button>
-                    <button class="btn btn-function" data-action="modulo">%</button>
                     <button class="btn btn-operator" data-operator="/">÷</button>
                     <button class="btn btn-operator" data-operator="*">×</button>
+                </div>
 
-                    <!-- Row 2 -->
+                <!-- Row 2 -->
+                <div class="button-row">
                     <button class="btn btn-number" data-number="7">7</button>
                     <button class="btn btn-number" data-number="8">8</button>
                     <button class="btn btn-number" data-number="9">9</button>
                     <button class="btn btn-operator" data-operator="-">−</button>
+                </div>
 
-                    <!-- Row 3 -->
+                <!-- Row 3 -->
+                <div class="button-row">
                     <button class="btn btn-number" data-number="4">4</button>
                     <button class="btn btn-number" data-number="5">5</button>
                     <button class="btn btn-number" data-number="6">6</button>
                     <button class="btn btn-operator" data-operator="+">+</button>
+                </div>
 
-                    <!-- Row 4 -->
+                <!-- Row 4 -->
+                <div class="button-row">
                     <button class="btn btn-number" data-number="1">1</button>
                     <button class="btn btn-number" data-number="2">2</button>
                     <button class="btn btn-number" data-number="3">3</button>
-                    <button class="btn btn-equals" data-action="equals" style="grid-row: span 2;">=</button>
+                    <button class="btn btn-equals" data-action="equals">=</button>
+                </div>
 
-                    <!-- Row 5 -->
-                    <button class="btn btn-number" data-number="0" style="grid-column: span 2;">0</button>
+                <!-- Row 5 -->
+                <div class="button-row">
+                    <button class="btn btn-number" data-number="0" style="flex: 2;">0</button>
                     <button class="btn btn-number" data-number=".">.</button>
+                    <button class="btn btn-equals" data-action="equals">=</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="calculator-footer">
-            <p>💡 Tip: Use your keyboard for faster input</p>
+            <!-- Scientific Calculator Buttons -->
+            <div class="buttons-section scientific-mode hidden" id="scientificMode">
+                <!-- Memory Row -->
+                <div class="button-row">
+                    <button class="btn btn-memory" data-action="mc">MC</button>
+                    <button class="btn btn-memory" data-action="mr">MR</button>
+                    <button class="btn btn-memory" data-action="m+">M+</button>
+                    <button class="btn btn-memory" data-action="m-">M−</button>
+                </div>
+
+                <!-- Scientific Row 1 -->
+                <div class="button-row">
+                    <button class="btn btn-function" data-action="clear">C</button>
+                    <button class="btn btn-function" data-action="backspace">←</button>
+                    <button class="btn btn-function" data-action="modulo">%</button>
+                    <button class="btn btn-operator" data-operator="/">÷</button>
+                </div>
+
+                <!-- Scientific Row 2 -->
+                <div class="button-row">
+                    <button class="btn btn-function" data-action="sqrt">√</button>
+                    <button class="btn btn-function" data-action="square">x²</button>
+                    <button class="btn btn-function" data-action="cube">x³</button>
+                    <button class="btn btn-operator" data-operator="*">×</button>
+                </div>
+
+                <!-- Scientific Row 3 -->
+                <div class="button-row">
+                    <button class="btn btn-function" data-action="sin">sin</button>
+                    <button class="btn btn-function" data-action="cos">cos</button>
+                    <button class="btn btn-function" data-action="tan">tan</button>
+                    <button class="btn btn-operator" data-operator="-">−</button>
+                </div>
+
+                <!-- Scientific Row 4 -->
+                <div class="button-row">
+                    <button class="btn btn-function" data-action="log">log</button>
+                    <button class="btn btn-function" data-action="ln">ln</button>
+                    <button class="btn btn-function" data-action="factorial">n!</button>
+                    <button class="btn btn-operator" data-operator="+">+</button>
+                </div>
+
+                <!-- Numbers Row 1 -->
+                <div class="button-row">
+                    <button class="btn btn-number" data-number="7">7</button>
+                    <button class="btn btn-number" data-number="8">8</button>
+                    <button class="btn btn-number" data-number="9">9</button>
+                    <button class="btn btn-function" data-action="reciprocal">1/x</button>
+                </div>
+
+                <!-- Numbers Row 2 -->
+                <div class="button-row">
+                    <button class="btn btn-number" data-number="4">4</button>
+                    <button class="btn btn-number" data-number="5">5</button>
+                    <button class="btn btn-number" data-number="6">6</button>
+                    <button class="btn btn-function" data-action="power">xʸ</button>
+                </div>
+
+                <!-- Numbers Row 3 -->
+                <div class="button-row">
+                    <button class="btn btn-number" data-number="1">1</button>
+                    <button class="btn btn-number" data-number="2">2</button>
+                    <button class="btn btn-number" data-number="3">3</button>
+                    <button class="btn btn-function" data-action="negate">±</button>
+                </div>
+
+                <!-- Numbers Row 4 -->
+                <div class="button-row">
+                    <button class="btn btn-number" data-number="0" style="flex: 2;">0</button>
+                    <button class="btn btn-number" data-number=".">.</button>
+                    <button class="btn btn-function" data-action="pi">π</button>
+                </div>
+
+                <!-- Equals Row -->
+                <div class="button-row">
+                    <button class="btn btn-equals" data-action="equals" style="flex: 4;">=</button>
+                </div>
+            </div>
         </div>
     </div>
 
