@@ -1,8 +1,3 @@
-// ============================================
-// SCIENTIFIC CALCULATOR - JAVASCRIPT ES6
-// Features: Standard/Scientific modes, Color themes
-// ============================================
-
 class Calculator {
   constructor() {
     this.displayMain = document.getElementById('displayMain');
@@ -107,13 +102,13 @@ class Calculator {
         this.currentValue = (1 / parseFloat(this.currentValue)).toString();
         break;
       case 'sin':
-        this.currentValue = Math.sin(parseFloat(this.currentValue) * Math.PI / 180).toString();
+        this.currentValue = this.formatNumber(Math.sin(parseFloat(this.currentValue) * Math.PI / 180)).toString();
         break;
       case 'cos':
-        this.currentValue = Math.cos(parseFloat(this.currentValue) * Math.PI / 180).toString();
+        this.currentValue = this.formatNumber(Math.cos(parseFloat(this.currentValue) * Math.PI / 180)).toString();
         break;
       case 'tan':
-        this.currentValue = Math.tan(parseFloat(this.currentValue) * Math.PI / 180).toString();
+        this.currentValue = this.formatNumber(Math.tan(parseFloat(this.currentValue) * Math.PI / 180)).toString();
         break;
       case 'log':
         this.currentValue = Math.log10(parseFloat(this.currentValue)).toString();
@@ -216,8 +211,17 @@ class Calculator {
     return result;
   }
 
+  formatNumber(num) {
+    // Round very small numbers to 0 (floating-point precision fix)
+    if (Math.abs(num) < 1e-10) return 0;
+    // Limit decimal places to avoid excessive scientific notation
+    return parseFloat(num.toPrecision(12));
+  }
+
   updateDisplay() {
-    this.displayMain.textContent = this.currentValue;
+    const numValue = parseFloat(this.currentValue);
+    const formatted = this.formatNumber(numValue);
+    this.displayMain.textContent = formatted.toString();
     
     if (this.operation) {
       this.displayHistory.textContent = `${this.previousValue} ${this.operation}`;
