@@ -2,7 +2,7 @@
 
 A powerful, responsive scientific calculator built with vanilla HTML5, CSS3, and JavaScript ES6. Features both standard and scientific modes with multiple color themes and a beautiful horizontal layout for desktop screens.
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
@@ -16,7 +16,7 @@ A powerful, responsive scientific calculator built with vanilla HTML5, CSS3, and
 - [Technical Details](#technical-details)
 - [License](#license)
 
-## ✨ Features
+##  Features
 
 ### Core Functionality
 - **Standard Calculator Mode**: Basic arithmetic operations (addition, subtraction, multiplication, division)
@@ -50,7 +50,7 @@ A powerful, responsive scientific calculator built with vanilla HTML5, CSS3, and
 - **Clear Function**: Reset calculator with the C button or Escape key
 - **Touch-Friendly**: Large buttons optimized for touch input on mobile devices
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Installation
 
@@ -73,7 +73,7 @@ python3 -m http.server 8000
 # Then visit http://localhost:8000 in your browser
 ```
 
-## 📖 Usage
+##  Usage
 
 ### Basic Calculations
 
@@ -116,7 +116,7 @@ Click any of the colored circles in the top-right corner:
 - 🧡 **Orange**: Warm and energetic
 - ⚫ **Black**: Dark and elegant
 
-## 📁 File Structure
+##  File Structure
 
 ```
 scientific-calculator/
@@ -150,7 +150,7 @@ scientific-calculator/
 - Theme persistence using localStorage
 - Floating-point precision fixes for trigonometric functions
 
-## 📱 Responsive Design
+##  Responsive Design
 
 The calculator adapts beautifully to all screen sizes:
 
@@ -178,7 +178,7 @@ The calculator adapts beautifully to all screen sizes:
 - Extra spacing for comfort
 - Maximum readability
 
-## 🧮 Calculator Modes
+##  Calculator Modes
 
 ### Standard Mode
 Perfect for everyday calculations:
@@ -200,7 +200,7 @@ Advanced mathematical operations:
 - 9 rows of buttons (36 buttons total)
 - Perfect for engineering and scientific work
 
-## 🎨 Color Themes
+##  Color Themes
 
 Each theme includes carefully selected colors for:
 - **Background**: Main calculator background
@@ -220,7 +220,7 @@ Each theme includes carefully selected colors for:
 | Orange | #ffe6cc | #ffd4a3 | #ff8c00 | Warm, energetic |
 | Black | #1a1a1a | #2d2d2d | #00d4ff | Dark, elegant |
 
-## ⌨️ Keyboard Shortcuts
+##  Keyboard Shortcuts
 
 The calculator supports full keyboard input:
 
@@ -238,7 +238,7 @@ The calculator supports full keyboard input:
 | `Escape` | Clear all |
 | `c` or `C` | Clear all |
 
-## 🌐 Browser Support
+##  Browser Support
 
 The calculator works on all modern browsers:
 
@@ -254,7 +254,7 @@ The calculator works on all modern browsers:
 - CSS3 support (Flexbox, CSS Variables)
 - No external dependencies or libraries
 
-## 🔧 Technical Details
+##  Technical Details
 
 ### Architecture
 
@@ -305,7 +305,7 @@ Theme preferences are stored in browser's localStorage:
 - Value: Theme name (white, pink, green, orange, black)
 - Persists across browser sessions
 
-## 🎯 Use Cases
+##  Use Cases
 
 - **Students**: Perfect for math, physics, and engineering calculations
 - **Professionals**: Quick calculations for work and projects
@@ -313,7 +313,7 @@ Theme preferences are stored in browser's localStorage:
 - **Learning**: Great example of vanilla JavaScript, HTML5, and CSS3
 - **Accessibility**: Works offline, no internet required
 
-## 📝 Code Quality
+##  Code Quality
 
 - **Clean Code**: Well-organized, readable, and maintainable
 - **Comments**: Inline documentation for complex logic
@@ -321,7 +321,7 @@ Theme preferences are stored in browser's localStorage:
 - **Optimized**: Minimal file sizes (6KB total when compressed)
 - **Accessible**: Semantic HTML, keyboard navigation support
 
-## 🚀 Performance
+##  Performance
 
 - **Load Time**: Instant (no build process, no dependencies)
 - **File Size**: 6KB (compressed ZIP)
@@ -329,14 +329,14 @@ Theme preferences are stored in browser's localStorage:
 - **Responsiveness**: Smooth animations and instant calculations
 - **Battery**: Efficient for mobile devices
 
-## 🐛 Known Limitations
+##  Known Limitations
 
 - Trigonometric functions work in degrees (not radians)
 - Maximum calculation precision: 12 significant figures
 - Very large numbers may display in scientific notation
 - No calculation history (cleared when calculator is reset)
 
-## 💡 Tips & Tricks
+##  Tips & Tricks
 
 1. **Quick Theme Switch**: Click theme buttons to instantly change the look
 2. **Keyboard Power User**: Use keyboard shortcuts for faster calculations
@@ -344,7 +344,7 @@ Theme preferences are stored in browser's localStorage:
 4. **Decimal Precision**: The calculator automatically handles decimal precision
 5. **Responsive Layout**: Resize your browser to see the layout adapt
 
-## 🔄 Future Enhancements
+##  Future Enhancements
 
 Potential features for future versions:
 - Calculation history panel
@@ -355,11 +355,11 @@ Potential features for future versions:
 - Keyboard layout customization
 - Dark mode auto-detection
 
-## 📄 License
+##  License
 
 This project is open source and available for personal and commercial use. Feel free to modify and distribute as needed.
 
-## 👨‍💻 Development
+##  Development
 
 ### How to Modify
 
@@ -378,7 +378,7 @@ To test the calculator:
 5. Test keyboard input
 6. Test memory operations
 
-## 📞 Support
+##  Support
 
 If you encounter any issues:
 1. Clear your browser cache and reload
@@ -386,11 +386,11 @@ If you encounter any issues:
 3. Check that JavaScript is enabled
 4. Ensure you're using a modern browser version
 
-## 🎉 Conclusion
+##  Conclusion
 
 This scientific calculator demonstrates professional web development practices with vanilla JavaScript, responsive design, and user-friendly interface. It's perfect for anyone needing a reliable calculator tool without the overhead of heavy applications.
 
-Enjoy your calculations! 🧮
+Enjoy your calculations! 
 
 ---
 
